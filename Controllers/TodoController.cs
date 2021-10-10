@@ -21,12 +21,14 @@ namespace DotnetTodoMvc.Controllers
     }
 
     [HttpGet]
-    public IActionResult Create() {
+    public IActionResult Create()
+    {
       return View();
     }
 
     [HttpPost]
-    public IActionResult Create(Todo todo) {
+    public IActionResult Create(Todo todo)
+    {
       var todoId = _dbcontext.Todos.Select(x => x.Id).Max() + 1;
       todo.Id = todoId;
       _dbcontext.Todos.Add(todo);
@@ -36,15 +38,35 @@ namespace DotnetTodoMvc.Controllers
     }
 
     [HttpGet]
-    public IActionResult Edit(int id) {
+    public IActionResult Edit(int id)
+    {
       var todo = _dbcontext.Todos.Find(id);
       return View(todo);
     }
 
     [HttpPost]
-    public IActionResult Edit(Todo todo) {
+    public IActionResult Edit(Todo todo)
+    {
       _dbcontext.Todos.Update(todo);
       _dbcontext.SaveChanges();
+      return RedirectToAction("Index");
+    }
+
+    public IActionResult Delete(int? id)
+    {
+      var todo = _dbcontext.Todos.Find(id);
+      if (todo == null) return NotFound();
+
+      return View(todo);
+    }
+
+    [HttpPost]
+    public IActionResult Delete(int id)
+    {
+      var todo = _dbcontext.Todos.Find(id);
+      _dbcontext.Todos.Remove(todo);
+      _dbcontext.SaveChanges();
+
       return RedirectToAction("Index");
     }
 
