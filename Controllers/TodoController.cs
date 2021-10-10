@@ -35,5 +35,18 @@ namespace DotnetTodoMvc.Controllers
       return RedirectToAction("Index");
     }
 
+    [HttpGet]
+    public IActionResult Edit(int id) {
+      var todo = _dbcontext.Todos.Find(id);
+      return View(todo);
+    }
+
+    [HttpPost]
+    public IActionResult Edit(Todo todo) {
+      _dbcontext.Todos.Update(todo);
+      _dbcontext.SaveChanges();
+      return RedirectToAction("Index");
+    }
+
   }
 }
