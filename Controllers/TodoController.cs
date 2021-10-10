@@ -20,5 +20,20 @@ namespace DotnetTodoMvc.Controllers
       return View(todos);
     }
 
+    [HttpGet]
+    public IActionResult Create() {
+      return View();
+    }
+
+    [HttpPost]
+    public IActionResult Create(Todo todo) {
+      var todoId = _dbcontext.Todos.Select(x => x.Id).Max() + 1;
+      todo.Id = todoId;
+      _dbcontext.Todos.Add(todo);
+      _dbcontext.SaveChanges();
+
+      return RedirectToAction("Index");
+    }
+
   }
 }

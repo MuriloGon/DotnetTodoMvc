@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace DotnetTodoMvc.Models
 {
   public class Todo
